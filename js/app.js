@@ -19,9 +19,28 @@
         // add the renderer view element to the DOM
         document.body.appendChild(renderer.view);
 
-        requestAnimFrame(animate);
+        
         // create a texture from an image path
+        
+        var explosionTextures = []
+        for (var i=0; i < 5; i++)
+        {
+             var texture = PIXI.Texture.fromImage("asset/sprite"+(i+1)+".png");
+             explosionTextures.push(texture);
+        };
 
+            // create an explosion MovieClip
+            var explosion = new PIXI.MovieClip(explosionTextures);
+            explosion.position.x = 120;
+            explosion.position.y = height-210;
+            explosion.anchor.x = 0.5;
+            explosion.anchor.y = 0.5;
+            explosion.animationSpeed = 0.2
+            explosion.gotoAndPlay(1);
+            stage.addChild(explosion);
+
+        
+        
         var farTexture = PIXI.Texture.fromImage("asset/maxresdefault.jpg");
         far = new PIXI.TilingSprite(farTexture, width, height);
         far.scale.x = 1;
@@ -39,8 +58,9 @@
         stage.addChild(far);
         stage.addChild(building);
         stage.addChild(ground);
+        stage.addChild(explosion);
         
-
+        requestAnimFrame(animate);
         function animate() {
             requestAnimFrame(animate);
             far.tilePosition.x -= 0.1;
